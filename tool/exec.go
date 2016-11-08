@@ -12,7 +12,7 @@ func Res_cmd() echo.HandlerFunc {
     return func(c echo.Context) error {
         cmd := exec.Command("git pull")
         cmd.Start()
-        fmt.Println("sasdadasdadasdaleep中中中: ", time.Now().Format("15:04:05"))
+        fmt.Println("sasdadasdadaleep中中中: ", time.Now().Format("15:04:05"))
         cmd.Wait()
         fmt.Println("slpppp終了: ", time.Now().Format("15:04:05"))
         aa := exec.Command(".././application")
