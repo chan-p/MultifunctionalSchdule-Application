@@ -6,7 +6,6 @@ import (
   "github.com/labstack/echo/engine/standard"
   "github.com/labstack/echo/middleware"
   "database/sql"
-  _"fmt"
   _ "github.com/go-sql-driver/mysql"
 
   "./tool"
