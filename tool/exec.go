@@ -10,12 +10,14 @@ import (
 
 func Res_cmd() echo.HandlerFunc {
     return func(c echo.Context) error {
-        cmd := exec.Command("sleep", "5s")
-        fmt.Println("sleep中中中: ", time.Now().Format("15:04:05"))
-        fmt.Println("slpppp終了: ", time.Now().Format("15:04:05"))
+        cmd := exec.Command("git pull")
         cmd.Start()
-        exec.Command(".././application").Start()
-        cmd.Wait()
+        fmt.Println("sleep中中中: ", time.Now().Format("15:04:05"))
+        cmd.wait()
+        fmt.Println("slpppp終了: ", time.Now().Format("15:04:05"))
+        aa := exec.Command(".././application")
+        aa.Start()
+        aa.wait()
         return c.String(http.StatusOK, "Heoollo World")
     }
 }
