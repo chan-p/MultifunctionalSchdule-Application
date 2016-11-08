@@ -5,6 +5,8 @@ import (
   "github.com/labstack/echo"
   "github.com/labstack/echo/engine/standard"
   "github.com/labstack/echo/middleware"
+
+  //データベース関連
   "database/sql"
   _ "github.com/go-sql-driver/mysql"
 
