@@ -15,7 +15,7 @@ import (
 )
 
 func db_connect() *sql.DB {
-  db,err := sql.Open("mysql","root:tomonori@tcp(172.31.20.152:3306)/social_app")
+  db,err := sql.Open("mysql","root:tomonori@tcp(localhost:3306)/social_app")
   if err != nil {
     panic(err.Error())
   }
