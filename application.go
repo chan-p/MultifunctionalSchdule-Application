@@ -36,8 +36,8 @@ func main(){
   e.Get("/email",tool.Res_mysql())
   e.Get("/calender",model.Echo_event(db))
   e.Get("/regist",model.Echo_regist(db))
-  e.Get("/cmd",tool.Res_cmd())
-  e.Post("/test",tool.Test_cmd())
+
+  e.Post("/pull",tool.Auto_pull())
   //サーバー構築 ポート1323
   e.Run(standard.New(":1323"))
 }
