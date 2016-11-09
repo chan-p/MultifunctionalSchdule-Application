@@ -17,6 +17,6 @@ func Test_cmd() echo.HandlerFunc {
         //cmd.Wait()
         //a, _ := exec.Command("sh", "-c", "git log --oneline | wc -l").Output()
         //fmt.Println(string(out))
-        return c.String(http.StatusOK, "Heoollo World")
+        return c.String(http.StatusOK, "HeoolloWWWWeeeeeWW World")
     }
 }
