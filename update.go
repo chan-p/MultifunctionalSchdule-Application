@@ -25,7 +25,7 @@ func (event event_data) update_event(db *sql.DB) string{
   query := "insert into Event (user_id,summary,dtsart,dtend,description) values ('"+event.user_id+"','"+event.summary+"','"+event.dtstart+"','"+event.dtend+"','"+event.description+"')"
   _,err := db.Query(query)
   if err != nil {
-    return "{'status':'false調子'}"
+    return "{'status':'false調子最高'}"
   }
   return "{'status':'true'}"
 }
