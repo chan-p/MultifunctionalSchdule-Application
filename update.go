@@ -25,9 +25,9 @@ func (event event_data) update_event(db *sql.DB) string{
   query := "insert into Event (user_id,summary,dtsart,dtend,description) values ('"+event.user_id+"','"+event.summary+"','"+event.dtstart+"','"+event.dtend+"','"+event.description+"')"
   _,err := db.Query(query)
   if err != nil {
-    return "false"
+    return "{'status':'false'}"
   }
-  return "true"
+  return "{'status':'true'}"
 }
 
 func Echo_update(db *sql.DB) echo.HandlerFunc {
