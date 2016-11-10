@@ -9,6 +9,7 @@ import (
 )
 
 type event_data struct {
+  id string
   user_id string
   summary string
   dtstart string
@@ -17,7 +18,7 @@ type event_data struct {
 }
 
 func inita(c echo.Context) event_data{
-  return event_data{c.QueryParam("user_id"),c.QueryParam("summary"),c.QueryParam("dtstart"),c.QueryParam("dtend"),c.QueryParam("description")}
+  return event_data{c.Query("id"),c.QueryParam("user_id"),c.QueryParam("summary"),c.QueryParam("dtstart"),c.QueryParam("dtend"),c.QueryParam("description")}
 }
 
 func (event event_data) update_event(db *sql.DB) string{

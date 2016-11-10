@@ -16,6 +16,7 @@ type user_data struct {
 
 //イベントの構造体(json形式)
 type event struct {
+  Id string `json:Id@`
   Summary string `json:"Summary"`
   Dtstart string `json:"dtstart"`
   Dtend string  `json:"dtend"`
@@ -30,7 +31,7 @@ func user_initation(c echo.Context) user_data{
 
 //データベースからユーザーの登録したイベント情報を抽出
 func (user user_data) extract_eventdata_from_db(db *sql.DB) []string {
-  query := "select summary,dtstart,dtend,description from Event where user_id="+user.id+" and year="+user.year+" and month="+ user.month
+  query := "select id,summary,dtstart,dtend,description from Event where user_id="+user.id+" and year="+user.year+" and month="+ user.month
   rows, err := db.Query(query)
   var value []string
 
@@ -68,7 +69,7 @@ func (user user_data) get_event(db *sql.DB) string{
   }
   st := "{'status':'true','data':{\n"
   for i := 0;i < len(data);i = i + 4 {
-    st += "[Summary:"+data[0+i]+",dtstart:"+data[1+i]+",dtend:"+data[2+i]+",description:"+data[3+i]+"]"
+    st += "[id:"+data[0+i]+",Summary:"+data[1+i]+",dtstart:"+data[2+i]+",dtend:"+data[2+i]+",description:"+data[4+i]+"]"
     st += "\n"
   }
   st += "}}"
@@ -79,11 +80,9 @@ func Echo_event(db *sql.DB) echo.HandlerFunc {
   return func(c echo.Context) error {
     //ユーザー情報を取得
     user := user_initation(c)
-    fmt.Println(user.id)
     //イベント情報を取得
     json := user.get_event(db)
-    //json = "ヤッホー"
-    fmt.Println(json)
+    json = "{'status': 'true','data': {'1': [{'id': 1,'summary': '4分の3発表','dtstart': '2016-11-05 09:00:00','dtend': '2016-11-05 11:00:00','description': '場所：スニル'}],'2': [{'id': 1,'summary': '4分の3発表','dtstart': '2016-11-05 09:00:00','dtend': '2016-11-05 11:00:00','description': '場所：スニル'}, {'id': 3,'summary': '4分の3発表','dtstart': '2016-11-05 09:00:00','dtend': '2016-11-05 11:00:00','description': '場所：スニル'}]}}"
     return c.JSON(http.StatusOK,json)
   }
 }
