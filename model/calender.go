@@ -68,7 +68,7 @@ func (user user_data) get_event(db *sql.DB) string{
     return "false"
   }
   st := "{'status':'true','data':{\n"
-  for i := 0;i < len(data);i = i + 4 {
+  for i := 0;i < len(data);i = i + 5 {
     st += "[id:"+data[0+i]+",Summary:"+data[1+i]+",dtstart:"+data[2+i]+",dtend:"+data[2+i]+",description:"+data[4+i]+"]"
     st += "\n"
   }
