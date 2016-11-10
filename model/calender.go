@@ -81,7 +81,6 @@ func Echo_event(db *sql.DB) echo.HandlerFunc {
     user := user_initation(c)
     fmt.Println(user.id)
     //イベント情報を取得
-    defer db.Close()
     json := user.get_event(db)
     return c.String(http.StatusOK,json)
   }
