@@ -34,6 +34,7 @@ func (user user_data) extract_eventdata_from_db(db *sql.DB) []string {
   rows, err := db.Query(query)
   var value []string
 
+  fmt.Println(err)
   if err != nil {
     value = append(value,"false")
     return value
