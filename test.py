@@ -13,7 +13,7 @@ app.config['DEBUG'] = True
 def asd():
     print(os.system("git status"))
     print(os.system("sh tool/test.sh"))
-    print(os.system("./application"))
+    print(os.system("nohup ./application &"))
     a = "HELLO"
     return a
 
