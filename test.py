@@ -11,7 +11,7 @@ app.config['DEBUG'] = True
 
 @app.route('/pull',methods=['POST'])
 def asd():
-    print(os.system("git status"))
+    print(os.system("git pull"))
     print(os.system("sh tool/test.sh"))
     print(os.system("nohup ./application &"))
     a = "HELLO"
