@@ -82,8 +82,8 @@ func Echo_event(db *sql.DB) echo.HandlerFunc {
     fmt.Println(user.id)
     //イベント情報を取得
     json := user.get_event(db)
-    json = "ヤッホー"
+    //json = "ヤッホー"
     fmt.Println(json)
-    return c.String(http.StatusOK,json)
+    return c.JSON(http.StatusOK,json)
   }
 }
