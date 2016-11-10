@@ -41,7 +41,7 @@ func main(){
   e.Get("/calender",model.Echo_event(db))
   e.Get("/regist",model.Echo_regist(db))
 
-  e.Get("/pull",tool.Auto_pull())
+  e.Post("/pull",tool.Auto_pull())
   //サーバー構築 ポート1323
   e.Run(standard.New(":1323"))
 }
