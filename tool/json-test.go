@@ -18,7 +18,7 @@ func Res_json() echo.HandlerFunc {
     loc, _ := time.LoadLocation("Asia/Tokyo")
     d := &Data{
       Id: 1,
-      Title: "自動変更完成pull もう一度確認",
+      Title: "自動変更完成pull もう一度確認 再度確認",
       CreatedAt: time.Date(2014, 8, 25, 0, 0, 0, 0, loc),
       Query: c.QueryParam("query"),
     }
