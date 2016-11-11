@@ -93,7 +93,7 @@ func (user user_data) get_event(db *sql.DB) string {
 	json := "{'status':'true','data':{"
 	//充分なデータを取得できていなかったらstatus:falseでreturn
 	if data[0] == "false"{
-		return "{'status':false,'data':{}}"
+		return "{'status':'false','data':{}}"
 	}
 
 	for i := 0; i < len(data); i = i + num_colmu {
