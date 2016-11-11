@@ -31,7 +31,7 @@ func initation(c echo.Context) event_data{
   return event_data{c.QueryParam("user_id"),c.QueryParam("summary"),c.QueryParam("dtstart"),c.QueryParam("dtend"),c.QueryParam("description"),"0","0","0"}
 }
 
-//
+//日付データをyear,month,dayにパース
 func  parse_timedata(event event_data) event_data{
   dtstart := event.dtstart
   date_time := strings.Split(dtstart," ")

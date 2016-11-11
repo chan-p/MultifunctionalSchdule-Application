@@ -1,6 +1,5 @@
 package main
 
-
 import (
   //フレームワーク関連パッケージ
   "github.com/labstack/echo"
@@ -37,9 +36,10 @@ func main(){
 
   //モデル
   e.Get("/json",tool.Res_json())
-  e.Get("/email",tool.Res_mysql())
   e.Get("/calender",model.Echo_event(db))
-  e.Get("/regist",model.Echo_regist(db))
+  e.Get("/calender/regist",model.Echo_regist(db))
+  e.Get("/calender/update",model.Echo_update(db))
+  e.Get("/calender/delete",model.Echo_delete(db))
 
   e.Post("/pull",tool.Auto_pull())
   //サーバー構築 ポート1323

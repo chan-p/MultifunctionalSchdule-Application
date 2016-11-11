@@ -61,6 +61,6 @@ func Echo_update(db *sql.DB) echo.HandlerFunc {
   return func(c echo.Context) error {
     event := initationa(c)
     status := event.update_event_to_db(db)
-    return c.String(http.StatusOK,status)
+    return c.JSON(http.StatusOK,status)
   }
 }
