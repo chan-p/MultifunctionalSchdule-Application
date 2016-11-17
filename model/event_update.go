@@ -45,16 +45,24 @@ func  parse_time (event event_info) event_info{
 }
 
 //dbのイベント情報の更新
-func (event event_info) update_event_to_db(db *sql.DB) string{
+func (event event_info) update_event_to_db(db *sql.DB) json_all{
   event = parse_time(event)
  
   query := "update Event set summary='"+event.summary+"',dtstart='"+event.dtstart+"',dtend='"+event.dtend+"',description='"+event.description+"',year='"+event.year+"',month='"+event.month+"',day='"+event.day+"' where id="+event.id+" and user_id="+event.user_id
   _,err := db.Query(query)
   if err != nil {
     fmt.Println(err)
-    return "{'status':'false'}"
+    fal := json_event{"0","0","0","0","0"}
+    res := json_all{}
+    res.Status = false
+    res.Data = append(res.Data,fal)
+    return res
   }
-  return "{'status':'true'}"
+  fal := json_event{"0","0","0","0","0"}
+  res := json_all{}
+  res.Status = true
+  res.Data = append(res.Data,fal)
+  return res
 }
 
 func Echo_event_update(db *sql.DB) echo.HandlerFunc {

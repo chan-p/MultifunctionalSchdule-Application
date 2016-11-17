@@ -26,6 +26,11 @@ type event_data struct {
   day string
 }
 
+type json_alll struct {
+  Status  bool `json:status`
+  Data   []json_event
+}
+
 //クエリからの取得情報でのイベント情報初期化
 func initation(c echo.Context) event_data{
   return event_data{c.QueryParam("user_id"),c.QueryParam("summary"),c.QueryParam("dtstart"),c.QueryParam("dtend"),c.QueryParam("description"),"0","0","0"}
@@ -43,15 +48,23 @@ func  parse_timedata(event event_data) event_data{
   return event
 }
 
-func (event event_data) regist_event(db *sql.DB) string{
+func (event event_data) regist_event(db *sql.DB) json_all{
   event = parse_timedata(event)
   query := "insert into Event (user_id,summary,dtstart,dtend,description,year,month,day) values ('"+event.user_id+"','"+event.summary+"','"+event.dtstart+"','"+event.dtend+"','"+event.description+"','"+event.year+"','"+event.month+"','"+event.day+"')"
   _,err := db.Query(query)
   if err != nil {
     fmt.Println(err)
-    return "{'status':'false','data':{}}"
+    fal := json_event{"0","0","0","0","0"}
+    res := json_all{}
+    res.Status = false
+    res.Data = append(res.Data,fal)
+    return res
   }
-  return "{'status':'true','data':{}}"
+  fal := json_event{"0","0","0","0","0"}
+  res := json_all{}
+  res.Status = true
+  res.Data = append(res.Data,fal)
+  return res
 }
 
 func Echo_event_regist(db *sql.DB) echo.HandlerFunc {

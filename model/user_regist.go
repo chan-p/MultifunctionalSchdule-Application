@@ -24,14 +24,22 @@ func initation_user(c echo.Context) user_status{
   return user_status{c.QueryParam("email"),c.QueryParam("pass")}
 }
 
-func (user user_status) regist_user(db *sql.DB) string{
+func (user user_status) regist_user(db *sql.DB) json_all{
   query := "insert into User (email,pass) values ('"+user.email+"','"+user.pass+"')"
   _,err := db.Query(query)
   if err != nil {
     fmt.Println(err)
-    return "{'status':'false','data':{}}"
+    fal := json_event{"0","0","0","0","0"}
+    res := json_all{}
+    res.Status = false
+    res.Data = append(res.Data,fal)
+    return res
   }
-  return "{'status':'true','data':{}}"
+  fal := json_event{"0","0","0","0","0"}
+  res := json_all{}
+  res.Status = true
+  res.Data = append(res.Data,fal)
+  return res
 }
 
 func Echo_user_regist(db *sql.DB) echo.HandlerFunc {

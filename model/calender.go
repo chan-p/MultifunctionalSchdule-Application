@@ -95,15 +95,9 @@ func (user user_data) get_event(db *sql.DB) json_all {
 
 	//各日のイベント格納用連想配列の初期化
 	schev := json_all{}
-  sche := make([]string,0)
-	var st string
-	//var index int
 
 	//returnするjson
-  json := "{'status':'true','data':"
   schev.Status = true
-  json_map := map[string]string{}
-  json_map["status"] = "true"
 	//json := "{'status':'true','data':{"
 	//充分なデータを取得できていなかったらstatus:falseでreturn
 	if data[0] == "false"{
@@ -113,24 +107,13 @@ func (user user_data) get_event(db *sql.DB) json_all {
     res.Data = append(res.Data,fal)
 		return res
 	}
-  
-	for i := 0; i < len(data); i = i + num_colmu {
-		st = "['id':" + data[0+i] + ",'Summary':'" + data[1+i] + "','dtstart':'" + data[2+i] + "','dtend':'" + data[3+i] + "','description':'" + data[4+i] + "']"
-    code := json_event{data[0+i],data[1+i],data[2+i],data[3+i],data[4+i]}
 
-		//index, _ = strconv.Atoi(data[5+i])
-		sche = append(sche, st)
+	for i := 0; i < len(data); i = i + num_colmu {
+		code := json_event{data[0+i],data[1+i],data[2+i],data[3+i],data[4+i]}
+
     schev.Data = append(schev.Data,code)
 	}
 
-		//json += strconv.Itoa(set+1) + ":"
-	for cont := 0; cont < len(sche); cont += 1 {
-		json += sche[cont]
-		if len(sche)-1 != cont {
-			json += ","
-		}
-	}
-	json += "}"
 	return schev
 }
 

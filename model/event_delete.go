@@ -23,14 +23,22 @@ func initation_id(c echo.Context) event_id  {
   return event_id{c.QueryParam("id"),c.QueryParam("user_id")}
 }
 
-func (event event_id) delete_event_at_db(db *sql.DB) string {
+func (event event_id) delete_event_at_db(db *sql.DB) json_all {
   query := "DELETE FROM Event WHERE id="+event.id+" and user_id="+event.user_id
   _,err := db.Query(query)
   if err != nil {
     fmt.Println(err)
-    return "{'status':'false','data':{}}"
+    fal := json_event{"0","0","0","0","0"}
+    res := json_all{}
+    res.Status = false
+    res.Data = append(res.Data,fal)
+    return res
   }
-  return "{'status':'true','data':{}}"
+  fal := json_event{"0","0","0","0","0"}
+  res := json_all{}
+  res.Status = true
+  res.Data = append(res.Data,fal)
+  return res
 }
 
 func Echo_event_delete(db *sql.DB) echo.HandlerFunc {
