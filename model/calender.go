@@ -11,7 +11,7 @@ import (
 
 	//標準パッケージ
 	"fmt"
-	"strconv"
+	_ "strconv"
 )
 
 //ユーザーの構造体
@@ -29,6 +29,19 @@ type event struct {
 	Dtend       string `json:"dtend"`
 	Description string `json:"dtstart"`
 	Day         string `json:day`
+}
+
+type json_event struct {
+	Id          string `json:id`
+	Summary     string `json:"summary"`
+	Dtstart     string `json:"dtstart"`
+	Dtend       string `json:"dtend"`
+	Description string `json:"description"`
+}
+
+type json_all struct {
+  Status  bool `json:status`
+  Data   []json_event
 }
 
 //クエリから情報取得
@@ -74,52 +87,51 @@ func (user user_data) extract_eventdata_from_db(db *sql.DB) []string {
 }
 
 //ユーザーのイベント情報を返す
-func (user user_data) get_event(db *sql.DB) string {
+func (user user_data) get_event(db *sql.DB) json_all {
 	//イベントデータを連想配列で取得
 	data := user.extract_eventdata_from_db(db)
 	//取得したカラム数
 	num_colmu := 6
 
 	//各日のイベント格納用連想配列の初期化
-	sche := make([][]string, 31)
-	for day := 0; day < 31; day = day + 1 {
-		sche[day] = []string{}
-	}
-
+	schev := json_all{}
+  sche := make([]string,0)
 	var st string
-	var index int
+	//var index int
 
 	//returnするjson
-	json := "{'status':'true','data':{"
+  json := "{'status':'true','data':"
+  schev.Status = true
+  json_map := map[string]string{}
+  json_map["status"] = "true"
+	//json := "{'status':'true','data':{"
 	//充分なデータを取得できていなかったらstatus:falseでreturn
 	if data[0] == "false"{
-		return "{'status':'false','data':{}}"
+    fal := json_event{"0","0","0","0","0"}
+    res := json_all{}
+    res.Status = true
+    res.Data = append(res.Data,fal)
+		return res
 	}
-
+  
 	for i := 0; i < len(data); i = i + num_colmu {
-		st = "[{'id':" + data[0+i] + ",'Summary':'" + data[1+i] + "','dtstart':'" + data[2+i] + "','dtend':'" + data[3+i] + "','description':'" + data[4+i] + "'}]"
+		st = "['id':" + data[0+i] + ",'Summary':'" + data[1+i] + "','dtstart':'" + data[2+i] + "','dtend':'" + data[3+i] + "','description':'" + data[4+i] + "']"
+    code := json_event{data[0+i],data[1+i],data[2+i],data[3+i],data[4+i]}
 
-		index, _ = strconv.Atoi(data[5+i])
-		sche[index-1] = append(sche[index-1], st)
+		//index, _ = strconv.Atoi(data[5+i])
+		sche = append(sche, st)
+    schev.Data = append(schev.Data,code)
 	}
 
-	for set := 0; set < len(sche); set += 1 {
-		json += strconv.Itoa(set+1) + ":"
-		for cont := 0; cont < len(sche[set]); cont += 1 {
-			json += sche[set][cont]
-			if len(sche[set])-1 != cont {
-				json += ","
-			}
-		}
-		if len(sche[set]) == 0 {
-			json += "[]"
-		}
-		if len(sche)-1 != set {
+		//json += strconv.Itoa(set+1) + ":"
+	for cont := 0; cont < len(sche); cont += 1 {
+		json += sche[cont]
+		if len(sche)-1 != cont {
 			json += ","
 		}
 	}
-	json += "}}"
-	return json
+	json += "}"
+	return schev
 }
 
 func Echo_event(db *sql.DB) echo.HandlerFunc {
