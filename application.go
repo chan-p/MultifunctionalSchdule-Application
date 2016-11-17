@@ -37,9 +37,10 @@ func main(){
   //モデル
   e.Get("/json",tool.Res_json())
   e.Get("/calender",model.Echo_event(db))
-  e.Get("/calender/regist",model.Echo_regist(db))
-  e.Get("/calender/update",model.Echo_update(db))
-  e.Get("/calender/delete",model.Echo_delete(db))
+  e.Get("/calender/regist",model.Echo_event_regist(db))
+  e.Get("/calender/update",model.Echo_event_update(db))
+  e.Get("/calender/delete",model.Echo_event_delete(db))
+  e.Get("/user/regist",model.Echo_user_regist(db))
 
   e.Post("/pull",tool.Auto_pull())
   //サーバー構築 ポート1323
