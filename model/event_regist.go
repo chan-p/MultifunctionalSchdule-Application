@@ -26,11 +26,6 @@ type event_data struct {
   day string
 }
 
-type json_alll struct {
-  Status  bool `json:status`
-  Data   []json_event
-}
-
 //クエリからの取得情報でのイベント情報初期化
 func initation(c echo.Context) event_data{
   return event_data{c.QueryParam("user_id"),c.QueryParam("summary"),c.QueryParam("dtstart"),c.QueryParam("dtend"),c.QueryParam("description"),"0","0","0"}
@@ -54,13 +49,13 @@ func (event event_data) regist_event(db *sql.DB) json_all{
   _,err := db.Query(query)
   if err != nil {
     fmt.Println(err)
-    fal := json_event{"0","0","0","0","0"}
+    fal := json_event{0,"0","0","0","0"}
     res := json_all{}
     res.Status = false
     res.Data = append(res.Data,fal)
     return res
   }
-  fal := json_event{"0","0","0","0","0"}
+  fal := json_event{0,"0","0","0","0"}
   res := json_all{}
   res.Status = true
   res.Data = append(res.Data,fal)

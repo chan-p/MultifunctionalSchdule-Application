@@ -28,13 +28,13 @@ func (event event_id) delete_event_at_db(db *sql.DB) json_all {
   _,err := db.Query(query)
   if err != nil {
     fmt.Println(err)
-    fal := json_event{"0","0","0","0","0"}
+    fal := json_event{0,"0","0","0","0"}
     res := json_all{}
     res.Status = false
     res.Data = append(res.Data,fal)
     return res
   }
-  fal := json_event{"0","0","0","0","0"}
+  fal := json_event{0,"0","0","0","0"}
   res := json_all{}
   res.Status = true
   res.Data = append(res.Data,fal)

@@ -11,7 +11,7 @@ import (
 
 	//標準パッケージ
 	"fmt"
-	_ "strconv"
+	"strconv"
 )
 
 //ユーザーの構造体
@@ -23,25 +23,12 @@ type user_data struct {
 
 //イベントの構造体(json形式)
 type event struct {
-	Id          string `json:Id`
-	Summary     string `json:"Summary"`
-	Dtstart     string `json:"dtstart"`
-	Dtend       string `json:"dtend"`
-	Description string `json:"dtstart"`
-	Day         string `json:day`
-}
-
-type json_event struct {
-	Id          string `json:id`
-	Summary     string `json:"summary"`
-	Dtstart     string `json:"dtstart"`
-	Dtend       string `json:"dtend"`
-	Description string `json:"description"`
-}
-
-type json_all struct {
-  Status  bool `json:status`
-  Data   []json_event
+	Id          string
+	Summary     string
+	Dtstart     string
+	Dtend       string
+	Description string
+	Day         string
 }
 
 //クエリから情報取得
@@ -98,10 +85,9 @@ func (user user_data) get_event(db *sql.DB) json_all {
 
 	//returnするjson
   schev.Status = true
-	//json := "{'status':'true','data':{"
 	//充分なデータを取得できていなかったらstatus:falseでreturn
 	if data[0] == "false"{
-    fal := json_event{"0","0","0","0","0"}
+    fal := json_event{0,"0","0","0","0"}
     res := json_all{}
     res.Status = true
     res.Data = append(res.Data,fal)
@@ -109,7 +95,8 @@ func (user user_data) get_event(db *sql.DB) json_all {
 	}
 
 	for i := 0; i < len(data); i = i + num_colmu {
-		code := json_event{data[0+i],data[1+i],data[2+i],data[3+i],data[4+i]}
+    id , _ := strconv.Atoi(data[0+i])
+		code := json_event{id,data[1+i],data[2+i],data[3+i],data[4+i]}
 
     schev.Data = append(schev.Data,code)
 	}
