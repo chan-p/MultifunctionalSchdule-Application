@@ -1,5 +1,12 @@
 package model
 
+//イベント情報を返すjson構造
+type json_all struct {
+  Status  bool `json:status`
+  Data    []json_event
+}
+
+//イベントの詳細な情報用のjson構造
 type json_event struct {
 	Id          int `json:id`
 	Summary     string `json:"summary"`
@@ -8,16 +15,13 @@ type json_event struct {
 	Description string `json:"description"`
 }
 
-type json_all struct {
-  Status  bool `json:status`
-  Data    []json_event
-}
-
+//タスク情報を返すjson構造
 type json struct {
   Status  bool `json:status`
   Data    []json_task
 }
 
+//タスクの詳細な情報用のjson構造
 type json_task struct {
 	Id        int    `json:id`
 	Title     string `json:"summary"`

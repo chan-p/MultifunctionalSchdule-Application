@@ -21,16 +21,6 @@ type user_data struct {
 	month string
 }
 
-//イベントの構造体(json形式)
-type event struct {
-	Id          string
-	Summary     string
-	Dtstart     string
-	Dtend       string
-	Description string
-	Day         string
-}
-
 //クエリから情報取得
 //ユーザー情報の初期化
 func user_initation(c echo.Context) user_data {
@@ -62,7 +52,7 @@ func (user user_data) extract_eventdata_from_db(db *sql.DB) []string {
 	for rows.Next() {
 		err = rows.Scan(scanArgs...)
 		for _, col := range values {
-			//データが取得できているかのエラー県ん出
+			//データが取得できているかのエラー検出
 			if col == nil {
 				data_extracted_from_db = append(data_extracted_from_db, "false")
 			} else {
@@ -80,7 +70,7 @@ func (user user_data) get_event(db *sql.DB) json_all {
 	//取得したカラム数
 	num_colmu := 6
 
-	//各日のイベント格納用連想配列の初期化
+	//返すjsonデータの初期化
 	schev := json_all{}
 
 	//returnするjson
@@ -89,12 +79,12 @@ func (user user_data) get_event(db *sql.DB) json_all {
 	if data[0] == "false"{
     fal := json_event{0,"0","0","0","0"}
     res := json_all{}
-    res.Status = true
+    res.Status = false
     res.Data = append(res.Data,fal)
 		return res
 	}
 
-	for i := 0; i < len(data); i = i + num_colmu {
+  for i := 0; i < len(data); i = i + num_colmu {
     id , _ := strconv.Atoi(data[0+i])
 		code := json_event{id,data[1+i],data[2+i],data[3+i],data[4+i]}
 

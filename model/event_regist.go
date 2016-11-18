@@ -34,19 +34,26 @@ func initation(c echo.Context) event_data{
 //日付データをyear,month,dayにパース
 func  parse_timedata(event event_data) event_data{
   dtstart := event.dtstart
+
+  //時間と日にちに分解
   date_time := strings.Split(dtstart," ")
   date := strings.Split(date_time[0],"-")
+
   event.year = date[0]
   event.month = date[1]
   event.day = date[2]
-  fmt.Println(event)
+
   return event
 }
 
+//取得データからクエリを生成
+//DBに投げてtrue,falseを返す
 func (event event_data) regist_event(db *sql.DB) json_all{
   event = parse_timedata(event)
   query := "insert into Event (user_id,summary,dtstart,dtend,description,year,month,day) values ('"+event.user_id+"','"+event.summary+"','"+event.dtstart+"','"+event.dtend+"','"+event.description+"','"+event.year+"','"+event.month+"','"+event.day+"')"
+
   _,err := db.Query(query)
+
   if err != nil {
     fmt.Println(err)
     fal := json_event{0,"0","0","0","0"}
