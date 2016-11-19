@@ -73,6 +73,6 @@ func Echo_event_regist(db *sql.DB) echo.HandlerFunc {
   return func(c echo.Context) error {
     event := initation(c)
     status := event.regist_event(db)
-    return c.String(http.StatusOK,status)
+    return c.JSON(http.StatusOK,status)
   }
 }
