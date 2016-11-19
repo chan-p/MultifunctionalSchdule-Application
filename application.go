@@ -35,7 +35,7 @@ func main(){
   e.Use(middleware.Recover())
 
   //モデル
-  e.Get("/json",tool.Res_json())
+  e.Post("/json",tool.Res_json())
    //登録済みイベントの表示
   e.Get("/calender",model.Echo_event(db))
    //イベントの登録
@@ -45,11 +45,11 @@ func main(){
    //イベントの削除
   e.Get("/calender/delete",model.Echo_event_delete(db))
    //ユーザーの登録
-  e.Get("/user/regist",model.Echo_user_regist(db))
+  e.Post("/user/regist",model.Echo_user_regist(db))
    //タスクの表示
   e.Get("/task",model.Echo_task(db))
    //タスクの登録
-  e.Get("/task/regist",model.Echo_task_regist(db))
+  e.Post("/task/regist",model.Echo_task_regist(db))
 
   e.Post("/pull",tool.Auto_pull())
   //サーバー構築 ポート1323

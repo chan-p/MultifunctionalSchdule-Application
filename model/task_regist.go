@@ -26,7 +26,7 @@ type task_data struct {
 
 //クエリからの取得情報でのイベント情報初期化
 func initat(c echo.Context) task_data{
-  return task_data{c.QueryParam("id"),c.QueryParam("title"),c.QueryParam("sub_task"),c.QueryParam("year"),c.QueryParam("month"),c.QueryParam("day")}
+  return task_data{c.FormValue("id"),c.FormValue("title"),c.FormValue("sub_task"),c.FormValue("year"),c.FormValue("month"),c.FormValue("day")}
 }
 func (task task_data) regist_task(db *sql.DB) json {
   query := "insert into Task (user_id,title,sub_task,year,month,day) values ('"+task.user_id+"','"+task.title+"','"+task.sub_task+"','"+task.year+"','"+task.month+"','"+task.day+")"

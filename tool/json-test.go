@@ -20,7 +20,7 @@ func Res_json() echo.HandlerFunc {
       Id: 1,
       Title: "自動変更完成pull もう一度確認 再度確認",
       CreatedAt: time.Date(2014, 8, 25, 0, 0, 0, 0, loc),
-      Query: c.QueryParam("query"),
+      Query: c.FormValue("name"),
     }
     //bytes, _ := json.Marshal(d)
     if err := c.Bind(d); err != nil{

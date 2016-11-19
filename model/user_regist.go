@@ -21,7 +21,7 @@ type user_status struct {
 
 //クエリからの取得情報でのイベント情報初期化
 func initation_user(c echo.Context) user_status{
-  return user_status{c.QueryParam("email"),c.QueryParam("pass")}
+  return user_status{c.FormValue("email"),c.FormValue("pass")}
 }
 
 func (user user_status) regist_user(db *sql.DB) json_all{
