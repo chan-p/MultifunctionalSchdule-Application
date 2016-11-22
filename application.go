@@ -49,7 +49,7 @@ func main(){
    //タスクの表示
   e.Get("/task",model.Echo_task(db))
    //タスクの登録
-  e.Post("/task/regist",model.Echo_task_regist(db))
+  e.Get("/task/regist",model.Echo_task_regist(db))
 
   e.Post("/pull",tool.Auto_pull())
   //サーバー構築 ポート1323
