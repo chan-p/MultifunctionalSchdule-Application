@@ -15,20 +15,18 @@ import (
 )
 
 //ユーザーの構造体
-type user_id struct {
+type user_ID struct {
 	id    string
 }
 
-
-
 //クエリから情報取得
 //ユーザー情報の初期化
-func user_init(c echo.Context) user_id {
-	return user_id{c.QueryParam("id")}
+func userID_init(c echo.Context) user_ID {
+	return user_ID{c.QueryParam("id")}
 }
 
 //データベースからユーザーの登録したイベント情報を抽出
-func (user user_id) extract_eventdata_from_db(db *sql.DB) []string {
+func (user user_ID) extract_eventdata_from_db(db *sql.DB) []string {
 	//sqlクエリ
 	query := "select id,title,sub_task,year,mont,day from Task where user_id=" + user.id + " order by dtend"
 	//データ取得
@@ -64,7 +62,7 @@ func (user user_id) extract_eventdata_from_db(db *sql.DB) []string {
 }
 
 //ユーザーのイベント情報を返す
-func (user user_id) get_task(db *sql.DB) json {
+func (user user_ID) get_task(db *sql.DB) json {
 	//イベントデータを連想配列で取得
 	data := user.extract_eventdata_from_db(db)
 	//取得したカラム数
@@ -98,7 +96,7 @@ func (user user_id) get_task(db *sql.DB) json {
 
 func Echo_task(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		user := user_init(c)  //ユーザー情報を取得
+		user := userID_init(c)  //ユーザー情報を取得
 		json_res := user.get_task(db) //イベント情報を取得
 		return c.JSON(http.StatusOK, json_res)
 	}

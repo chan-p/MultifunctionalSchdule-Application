@@ -37,7 +37,7 @@ func main(){
   //モデル
   e.Post("/json",tool.Res_json())
    //登録済みイベントの表示
-  e.Get("/calender",model.Echo_event(db))
+  e.Get("/calender",model.Echo_event_detail(db))
    //イベントの登録
   e.Get("/calender/regist",model.Echo_event_regist(db))
    //イベントの更新
