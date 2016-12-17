@@ -28,7 +28,7 @@ func taskInit(db *gorm.DB, c echo.Context) model.Task{
   year    , _ := strconv.Atoi(c.QueryParam("year"))
   month   , _ := strconv.Atoi(c.QueryParam("month"))
   day     , _ := strconv.Atoi(c.QueryParam("day"))
-  return model.Task{id, user_id, c.QueryParam("title"), c.QueryParam("subtask"), c.QueryParam("dtend"), year, month, day}
+  return model.Task{id, user_id, c.QueryParam("title"), c.QueryParam("sub_task"), c.QueryParam("dtend"), year, month, day}
 }
 
 func  parseDate(data model.Task) model.Task {
