@@ -11,7 +11,7 @@ import (
   _ "github.com/jinzhu/gorm/dialects/mysql"
 
   "net/http"
-  _ "fmt"
+  "fmt"
   "strconv"
   _ "time"
   "strings"
@@ -73,7 +73,8 @@ func TaskShowAll(db *gorm.DB) echo.HandlerFunc{
     literal := []string{}
     datetime := ""
     for _, v := range tasks{
-      literal   = strings.Split(tasks[0].Dtend, "T")
+      fmt.Println(v)
+      literal   = strings.Split(v.Dtend, "T")
       datetime  = literal[0]
       v.Dtend   = datetime
       response.Data[v.Day-1].Day = append(response.Data[v.Day-1].Day,v)
