@@ -11,7 +11,7 @@ import (
   _ "github.com/jinzhu/gorm/dialects/mysql"
 
   "net/http"
-  _ "fmt"
+  "fmt"
   "strconv"
   _ "time"
   "strings"
@@ -45,7 +45,7 @@ func TaskRegist(db *gorm.DB) echo.HandlerFunc{
   return func(c echo.Context) error {
     task := taskInit(db, c)
     task = parseDate(task)
-    task.Status = 0
+    task.Status = 1
     db.Create(&task)
     return c.JSON(http.StatusOK, Res{Status:true})
   }
@@ -65,6 +65,7 @@ func TaskUpdate(db *gorm.DB) echo.HandlerFunc{
     task := taskInit(db, c)
     old_task := model.Task{Id:task.Id,User_Id:task.User_Id}
     task = parseDate(task)
+    fmt.Println(task)
     db.Model(&old_task).Update(&task)
     return c.JSON(http.StatusOK, Res{Status:true})
   }
