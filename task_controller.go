@@ -11,7 +11,7 @@ import (
   _ "github.com/jinzhu/gorm/dialects/mysql"
 
   "net/http"
-  "fmt"
+  _ "fmt"
   "strconv"
   _ "time"
   "strings"
@@ -24,11 +24,11 @@ import (
 func taskInit(db *gorm.DB, c echo.Context) model.Task{
   id      , _ := strconv.Atoi(c.QueryParam("id"))
   user_id , _ := strconv.Atoi(c.QueryParam("user_id"))
-  // dtend   , _ := time.Parse("2016-12-1", c.QueryParam("dtend"))
+  status  , _ := strconv.Atoi(c.QueryParam("status"))
   year    , _ := strconv.Atoi(c.QueryParam("year"))
   month   , _ := strconv.Atoi(c.QueryParam("month"))
   day     , _ := strconv.Atoi(c.QueryParam("day"))
-  return model.Task{id, user_id, c.QueryParam("title"), c.QueryParam("sub_task"), c.QueryParam("dtend"), year, month, day}
+  return model.Task{id, user_id, c.QueryParam("title"), c.QueryParam("sub_task"), c.QueryParam("dtend"), status, year, month, day}
 }
 
 func  parseDate(data model.Task) model.Task {
@@ -45,6 +45,7 @@ func TaskRegist(db *gorm.DB) echo.HandlerFunc{
   return func(c echo.Context) error {
     task := taskInit(db, c)
     task = parseDate(task)
+    task.Status = 0
     db.Create(&task)
     return c.JSON(http.StatusOK, Res{Status:true})
   }
@@ -83,7 +84,6 @@ func TaskShowAll(db *gorm.DB) echo.HandlerFunc{
     literal := []string{}
     datetime := ""
     for _, v := range tasks{
-      fmt.Println(v)
       literal   = strings.Split(v.Dtend, "T")
       datetime  = literal[0]
       v.Dtend   = datetime
