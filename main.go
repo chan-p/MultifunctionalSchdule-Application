@@ -65,22 +65,25 @@ func main(){
   e.Use(middleware.Logger())
   e.Use(middleware.Recover())
 
-  //モデル
-   //登録済みイベントの表示
+  // ルーティング
+  // イベントの表示
   e.Get("/calender"       ,EventShowAll(gorm))
-   //イベントの登録
+  // イベントの登録
   e.Get("/calender/regist",EventRegist(gorm))
-   //イベントの更新
+  // イベントの更新
   e.Get("/calender/update",EventUpdate(gorm))
-   //イベントの削除
+  // イベントの削除
   e.Get("/calender/delete",EventDelete(gorm))
-   //ユーザーの登録
+  // ユーザーの登録
   //e.Post("/user/regist",model.Echo_user_regist(db))
-   //タスクの表示
+  // タスクの表示
   e.Get("/task"           ,TaskShowAll(gorm))
-   //タスクの登録
+  // タスクの登録
   e.Get("/task/regist"    ,TaskRegist(gorm))
-
+  // タスクの削除
+  e.Get("/task/delete"    ,TaskDelete(gorm))
+  // タスクの更新
+  e.Get("/task/update"    ,TaskUpdate(gorm))
   //サーバー構築 ポート1323
   e.Run(standard.New(":1323"))
 }

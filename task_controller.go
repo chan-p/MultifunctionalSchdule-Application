@@ -50,14 +50,24 @@ func TaskRegist(db *gorm.DB) echo.HandlerFunc{
   }
 }
 
-//func TaskDelete(db *gorm.DB) {
-//}
+func TaskDelete(db *gorm.DB) echo.HandlerFunc{
+  return func(c echo.Context) error {
+    task := taskInit(db, c)
+    db.First(&task)
+    db.Delete(&task)
+    return c.JSON(http.StatusOK, Res{Status:true})
+  }
+}
 
-//func TaskUpdate(db *gorm.DB) {
-//}
-
-//func TaskShowMonth(db *gorm.DB) {
-//}
+func TaskUpdate(db *gorm.DB) echo.HandlerFunc{
+  return func(c echo.Context) error {
+    task := taskInit(db, c)
+    old_task := model.Task{Id:task.Id,User_Id:task.User_Id}
+    task = parseDate(task)
+    db.Model(&old_task).Update(&task)
+    return c.JSON(http.StatusOK, Res{Status:true})
+  }
+}
 
 func TaskShowAll(db *gorm.DB) echo.HandlerFunc{
   return func(c echo.Context) error {
