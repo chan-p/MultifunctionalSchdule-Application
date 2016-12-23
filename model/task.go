@@ -1,7 +1,5 @@
 package model
 
-// import "time"
-
 //タスク情報の構造体
 type Task struct {
   Id        int       `json:id`

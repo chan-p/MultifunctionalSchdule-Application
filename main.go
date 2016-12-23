@@ -84,6 +84,10 @@ func main(){
   e.Get("/task/delete"    ,TaskDelete(gorm))
   // タスクの更新
   e.Get("/task/update"    ,TaskUpdate(gorm))
+  // タグの登録
+  e.Get("/tag/regist"     ,TagRegist(gorm))
+  // ニュース情報の取得
+  e.Get("/show/news"      ,NewsURLShow(gorm))
   //サーバー構築 ポート1323
   e.Run(standard.New(":1323"))
 }
